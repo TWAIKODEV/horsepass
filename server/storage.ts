@@ -97,6 +97,45 @@ export class MemStorage implements IStorage {
     this.documentosTransporteUe = new Map();
     this.librosRegistro = new Map();
     this.currentId = 1;
+    this.initTestData();
+  }
+
+  private initTestData() {
+    // Create test users for demo
+    const testUsers = [
+      {
+        nombre: "Dr. Elena",
+        apellidos: "García Veterinaria",
+        email: "vet@agde.es",
+        password: "password123",
+        tipoUsuario: "veterinario",
+        numColegiado: "VET-2024-001",
+        numLicenciaTransporte: null,
+        idAutoridad: null,
+        activo: true
+      },
+      {
+        nombre: "Juan Carlos",
+        apellidos: "Ramírez Propietario",
+        email: "owner@agde.es", 
+        password: "password123",
+        tipoUsuario: "propietario",
+        numColegiado: null,
+        numLicenciaTransporte: null,
+        idAutoridad: null,
+        activo: true
+      }
+    ];
+
+    testUsers.forEach(userData => {
+      const user: User = {
+        ...userData,
+        id: this.currentId++,
+        fechaRegistro: new Date(),
+        ultimoAcceso: null,
+      };
+      this.users.set(user.id, user);
+    });
   }
 
   // Users
