@@ -6,12 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Plus, Search, Rabbit, Calendar, MapPin, Eye, Edit, Grid, List } from "lucide-react";
+import { Plus, Search, Rabbit, Calendar, MapPin, Eye, Edit, Grid, List, FileText } from "lucide-react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import HorseForm from "@/components/forms/horse-form";
 import HorseListView from "@/components/HorseListView";
 import PreviewModal from "@/components/PreviewModal";
+import TMEForm from "@/components/forms/tme-form";
 import { useToast } from "@/hooks/use-toast";
 import { downloadPDF, printDocument, DocumentData } from "@/lib/document-utils";
 
@@ -23,6 +24,8 @@ export default function Horses() {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [showPreview, setShowPreview] = useState(false);
   const [previewData, setPreviewData] = useState<DocumentData | null>(null);
+  const [showTMEForm, setShowTMEForm] = useState(false);
+  const [selectedHorseForTME, setSelectedHorseForTME] = useState<any>(null);
   const { toast } = useToast();
 
   const { data: caballos = [], isLoading, error } = useQuery({
@@ -109,6 +112,15 @@ export default function Horses() {
         variant: "destructive",
       });
     }
+  };
+
+  const handleGenerateTME = (horse: any) => {
+    setSelectedHorseForTME(horse);
+    setShowTMEForm(true);
+    toast({
+      title: "Generando TME",
+      description: `Iniciando creación de TME para ${horse.nombre} según RD 577/2014`,
+    });
   };
 
   if (error) {
@@ -223,6 +235,7 @@ export default function Horses() {
           onEdit={handleEdit}
           onDownload={handleDownload}
           onPrint={handlePrint}
+          onGenerateTME={handleGenerateTME}
           onAdd={() => setShowForm(true)}
         />
       ) : (
@@ -281,6 +294,16 @@ export default function Horses() {
                   >
                     <Eye className="w-4 h-4" />
                     Ver
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="flex items-center gap-1"
+                    onClick={() => handleGenerateTME(caballo)}
+                    title="Generar TME (RD 577/2014)"
+                  >
+                    <FileText className="w-4 h-4" />
+                    TME
                   </Button>
                   <Button 
                     variant="outline" 
