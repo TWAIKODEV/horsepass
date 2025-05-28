@@ -214,13 +214,19 @@ export default function Farms() {
       {/* Farm Form Dialog */}
       <Dialog open={showForm} onOpenChange={setShowForm}>
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-          <FarmForm 
-            farm={selectedFarm}
-            onClose={() => {
+          <div className="p-6 text-center">
+            <Building className="w-16 h-16 mx-auto text-gray-400 mb-4" />
+            <h3 className="text-lg font-semibold mb-2">
+              {selectedFarm ? "Editar Explotación" : "Nueva Explotación"}
+            </h3>
+            <p className="text-gray-600 mb-6">
+              Este formulario estará disponible próximamente.
+            </p>
+            <Button onClick={() => {
               setShowForm(false);
               setSelectedFarm(null);
-            }} 
-          />
+            }}>Cerrar</Button>
+          </div>
         </DialogContent>
       </Dialog>
     </div>
