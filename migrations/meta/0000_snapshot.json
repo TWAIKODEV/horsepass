@@ -1,0 +1,1014 @@
+{
+  "id": "67d37ceb-43a8-4c2d-a0d2-c36b10066493",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.caballos": {
+      "name": "caballos",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "ueln": {
+          "name": "ueln",
+          "type": "varchar(15)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "microchip": {
+          "name": "microchip",
+          "type": "varchar(23)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "nombre": {
+          "name": "nombre",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fecha_nacimiento": {
+          "name": "fecha_nacimiento",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sexo": {
+          "name": "sexo",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "raza": {
+          "name": "raza",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "capa": {
+          "name": "capa",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "pais_origen": {
+          "name": "pais_origen",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id_explotacion": {
+          "name": "id_explotacion",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id_propietario": {
+          "name": "id_propietario",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fecha_registro": {
+          "name": "fecha_registro",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "activo": {
+          "name": "activo",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "caballos_id_explotacion_explotaciones_id_fk": {
+          "name": "caballos_id_explotacion_explotaciones_id_fk",
+          "tableFrom": "caballos",
+          "tableTo": "explotaciones",
+          "columnsFrom": [
+            "id_explotacion"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "caballos_id_propietario_users_id_fk": {
+          "name": "caballos_id_propietario_users_id_fk",
+          "tableFrom": "caballos",
+          "tableTo": "users",
+          "columnsFrom": [
+            "id_propietario"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "caballos_ueln_unique": {
+          "name": "caballos_ueln_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "ueln"
+          ]
+        },
+        "caballos_microchip_unique": {
+          "name": "caballos_microchip_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "microchip"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.certificados_salud": {
+      "name": "certificados_salud",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "id_caballo": {
+          "name": "id_caballo",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "numero_certificado": {
+          "name": "numero_certificado",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fecha_emision": {
+          "name": "fecha_emision",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fecha_validez": {
+          "name": "fecha_validez",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id_veterinario": {
+          "name": "id_veterinario",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "resultado": {
+          "name": "resultado",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "observaciones": {
+          "name": "observaciones",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "vacunas_aplicadas": {
+          "name": "vacunas_aplicadas",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pruebas_realizadas": {
+          "name": "pruebas_realizadas",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "url_documento": {
+          "name": "url_documento",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fecha_registro": {
+          "name": "fecha_registro",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "certificados_salud_id_caballo_caballos_id_fk": {
+          "name": "certificados_salud_id_caballo_caballos_id_fk",
+          "tableFrom": "certificados_salud",
+          "tableTo": "caballos",
+          "columnsFrom": [
+            "id_caballo"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "certificados_salud_id_veterinario_users_id_fk": {
+          "name": "certificados_salud_id_veterinario_users_id_fk",
+          "tableFrom": "certificados_salud",
+          "tableTo": "users",
+          "columnsFrom": [
+            "id_veterinario"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "certificados_salud_numero_certificado_unique": {
+          "name": "certificados_salud_numero_certificado_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "numero_certificado"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.documentos_transporte_ue": {
+      "name": "documentos_transporte_ue",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "id_caballo": {
+          "name": "id_caballo",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "numero_documento": {
+          "name": "numero_documento",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fecha_emision": {
+          "name": "fecha_emision",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "pais_origen": {
+          "name": "pais_origen",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "pais_destino": {
+          "name": "pais_destino",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "punto_control_fronterizo": {
+          "name": "punto_control_fronterizo",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id_certificado_salud": {
+          "name": "id_certificado_salud",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id_guia_movimiento": {
+          "name": "id_guia_movimiento",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "url_documento": {
+          "name": "url_documento",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fecha_registro": {
+          "name": "fecha_registro",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "id_emisor": {
+          "name": "id_emisor",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "documentos_transporte_ue_id_caballo_caballos_id_fk": {
+          "name": "documentos_transporte_ue_id_caballo_caballos_id_fk",
+          "tableFrom": "documentos_transporte_ue",
+          "tableTo": "caballos",
+          "columnsFrom": [
+            "id_caballo"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "documentos_transporte_ue_id_certificado_salud_certificados_salud_id_fk": {
+          "name": "documentos_transporte_ue_id_certificado_salud_certificados_salud_id_fk",
+          "tableFrom": "documentos_transporte_ue",
+          "tableTo": "certificados_salud",
+          "columnsFrom": [
+            "id_certificado_salud"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "documentos_transporte_ue_id_guia_movimiento_guias_movimiento_id_fk": {
+          "name": "documentos_transporte_ue_id_guia_movimiento_guias_movimiento_id_fk",
+          "tableFrom": "documentos_transporte_ue",
+          "tableTo": "guias_movimiento",
+          "columnsFrom": [
+            "id_guia_movimiento"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "documentos_transporte_ue_id_emisor_users_id_fk": {
+          "name": "documentos_transporte_ue_id_emisor_users_id_fk",
+          "tableFrom": "documentos_transporte_ue",
+          "tableTo": "users",
+          "columnsFrom": [
+            "id_emisor"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "documentos_transporte_ue_numero_documento_unique": {
+          "name": "documentos_transporte_ue_numero_documento_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "numero_documento"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.explotaciones": {
+      "name": "explotaciones",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "codigo_rega": {
+          "name": "codigo_rega",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "nombre": {
+          "name": "nombre",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "direccion": {
+          "name": "direccion",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "municipio": {
+          "name": "municipio",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "provincia": {
+          "name": "provincia",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "codigo_postal": {
+          "name": "codigo_postal",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "telefono": {
+          "name": "telefono",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "tipo_explotacion": {
+          "name": "tipo_explotacion",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "capacidad_maxima": {
+          "name": "capacidad_maxima",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fecha_registro": {
+          "name": "fecha_registro",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "id_propietario": {
+          "name": "id_propietario",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "activa": {
+          "name": "activa",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "explotaciones_id_propietario_users_id_fk": {
+          "name": "explotaciones_id_propietario_users_id_fk",
+          "tableFrom": "explotaciones",
+          "tableTo": "users",
+          "columnsFrom": [
+            "id_propietario"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "explotaciones_codigo_rega_unique": {
+          "name": "explotaciones_codigo_rega_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "codigo_rega"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.guias_movimiento": {
+      "name": "guias_movimiento",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "id_caballo": {
+          "name": "id_caballo",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "numero_guia": {
+          "name": "numero_guia",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fecha_emision": {
+          "name": "fecha_emision",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "explotacion_origen": {
+          "name": "explotacion_origen",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "explotacion_destino": {
+          "name": "explotacion_destino",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fecha_salida": {
+          "name": "fecha_salida",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fecha_llegada": {
+          "name": "fecha_llegada",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "motivo_traslado": {
+          "name": "motivo_traslado",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "medio_transporte": {
+          "name": "medio_transporte",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "matricula_vehiculo": {
+          "name": "matricula_vehiculo",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id_transportista": {
+          "name": "id_transportista",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "estado": {
+          "name": "estado",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "url_documento": {
+          "name": "url_documento",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fecha_registro": {
+          "name": "fecha_registro",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "id_emisor": {
+          "name": "id_emisor",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "guias_movimiento_id_caballo_caballos_id_fk": {
+          "name": "guias_movimiento_id_caballo_caballos_id_fk",
+          "tableFrom": "guias_movimiento",
+          "tableTo": "caballos",
+          "columnsFrom": [
+            "id_caballo"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "guias_movimiento_explotacion_origen_explotaciones_id_fk": {
+          "name": "guias_movimiento_explotacion_origen_explotaciones_id_fk",
+          "tableFrom": "guias_movimiento",
+          "tableTo": "explotaciones",
+          "columnsFrom": [
+            "explotacion_origen"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "guias_movimiento_explotacion_destino_explotaciones_id_fk": {
+          "name": "guias_movimiento_explotacion_destino_explotaciones_id_fk",
+          "tableFrom": "guias_movimiento",
+          "tableTo": "explotaciones",
+          "columnsFrom": [
+            "explotacion_destino"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "guias_movimiento_id_transportista_users_id_fk": {
+          "name": "guias_movimiento_id_transportista_users_id_fk",
+          "tableFrom": "guias_movimiento",
+          "tableTo": "users",
+          "columnsFrom": [
+            "id_transportista"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "guias_movimiento_id_emisor_users_id_fk": {
+          "name": "guias_movimiento_id_emisor_users_id_fk",
+          "tableFrom": "guias_movimiento",
+          "tableTo": "users",
+          "columnsFrom": [
+            "id_emisor"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "guias_movimiento_numero_guia_unique": {
+          "name": "guias_movimiento_numero_guia_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "numero_guia"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.libros_registro": {
+      "name": "libros_registro",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "id_explotacion": {
+          "name": "id_explotacion",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fecha_apertura": {
+          "name": "fecha_apertura",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fecha_ultima_actualizacion": {
+          "name": "fecha_ultima_actualizacion",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "url_documento": {
+          "name": "url_documento",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "observaciones": {
+          "name": "observaciones",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id_responsable": {
+          "name": "id_responsable",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "libros_registro_id_explotacion_explotaciones_id_fk": {
+          "name": "libros_registro_id_explotacion_explotaciones_id_fk",
+          "tableFrom": "libros_registro",
+          "tableTo": "explotaciones",
+          "columnsFrom": [
+            "id_explotacion"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "libros_registro_id_responsable_users_id_fk": {
+          "name": "libros_registro_id_responsable_users_id_fk",
+          "tableFrom": "libros_registro",
+          "tableTo": "users",
+          "columnsFrom": [
+            "id_responsable"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.pasaportes": {
+      "name": "pasaportes",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "id_caballo": {
+          "name": "id_caballo",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "numero_pasaporte": {
+          "name": "numero_pasaporte",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fecha_emision": {
+          "name": "fecha_emision",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "autoridad_emisora": {
+          "name": "autoridad_emisora",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fecha_validez": {
+          "name": "fecha_validez",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "url_documento": {
+          "name": "url_documento",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "estado": {
+          "name": "estado",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fecha_registro": {
+          "name": "fecha_registro",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "id_emisor": {
+          "name": "id_emisor",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "pasaportes_id_caballo_caballos_id_fk": {
+          "name": "pasaportes_id_caballo_caballos_id_fk",
+          "tableFrom": "pasaportes",
+          "tableTo": "caballos",
+          "columnsFrom": [
+            "id_caballo"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "pasaportes_id_emisor_users_id_fk": {
+          "name": "pasaportes_id_emisor_users_id_fk",
+          "tableFrom": "pasaportes",
+          "tableTo": "users",
+          "columnsFrom": [
+            "id_emisor"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "pasaportes_numero_pasaporte_unique": {
+          "name": "pasaportes_numero_pasaporte_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "numero_pasaporte"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.users": {
+      "name": "users",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "nombre": {
+          "name": "nombre",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "apellidos": {
+          "name": "apellidos",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "password": {
+          "name": "password",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tipo_usuario": {
+          "name": "tipo_usuario",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "num_colegiado": {
+          "name": "num_colegiado",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "num_licencia_transporte": {
+          "name": "num_licencia_transporte",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id_autoridad": {
+          "name": "id_autoridad",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fecha_registro": {
+          "name": "fecha_registro",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "ultimo_acceso": {
+          "name": "ultimo_acceso",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "activo": {
+          "name": "activo",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "users_email_unique": {
+          "name": "users_email_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
