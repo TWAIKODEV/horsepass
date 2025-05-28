@@ -112,36 +112,49 @@ export const downloadPDF = async (data: DocumentData) => {
 
 // Función para imprimir directamente
 export const printDocument = (data: DocumentData) => {
-  const printWindow = window.open('', '_blank');
+  // Crear elemento temporal para generar contenido de impresión
+  const printContent = document.createElement('div');
+  printContent.innerHTML = generateHTMLContent(data);
+  
+  // Crear ventana de impresión
+  const printWindow = window.open('', '_blank', 'width=800,height=600');
   
   if (!printWindow) {
     alert('Por favor, permite las ventanas emergentes para imprimir');
     return;
   }
 
-  const htmlContent = generateHTMLContent(data);
-  
+  // Escribir contenido específico para impresión
   printWindow.document.write(`
     <!DOCTYPE html>
     <html>
       <head>
         <title>Imprimir - ${data.title}</title>
+        <meta charset="utf-8">
         <style>
-          ${getPreviewStyles()}
-          @media print {
-            .no-print { display: none !important; }
-            body { margin: 0; }
-          }
+          ${getPrintOnlyStyles()}
         </style>
       </head>
       <body>
-        ${htmlContent}
+        <div class="print-container">
+          ${generateHTMLContent(data)}
+        </div>
         <script>
           window.onload = function() {
-            window.print();
-            window.onafterprint = function() {
-              window.close();
-            };
+            // Esperar a que se carguen todos los estilos
+            setTimeout(function() {
+              window.print();
+              // Cerrar ventana después de imprimir o cancelar
+              window.onafterprint = function() {
+                window.close();
+              };
+              // Fallback para cerrar si el usuario cancela
+              setTimeout(function() {
+                if (!window.closed) {
+                  window.close();
+                }
+              }, 1000);
+            }, 500);
           };
         </script>
       </body>
@@ -387,6 +400,175 @@ const formatFieldName = (fieldName: string): string => {
   };
 
   return fieldMappings[fieldName] || fieldName.charAt(0).toUpperCase() + fieldName.slice(1);
+};
+
+// Estilos CSS específicos para impresión
+const getPrintOnlyStyles = (): string => {
+  return `
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background: white;
+      font-family: 'Arial', sans-serif;
+      font-size: 12pt;
+      line-height: 1.4;
+      color: #000;
+    }
+    
+    .print-container {
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      padding: 15mm;
+      background: white;
+    }
+    
+    .document {
+      width: 100%;
+      background: white;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 2px solid #000;
+      padding-bottom: 10pt;
+      margin-bottom: 15pt;
+    }
+    
+    .logo h1 {
+      color: #000;
+      font-size: 18pt;
+      font-weight: bold;
+      margin-bottom: 3pt;
+    }
+    
+    .logo p {
+      color: #666;
+      font-size: 10pt;
+    }
+    
+    .doc-info {
+      text-align: right;
+    }
+    
+    .doc-info h2 {
+      color: #000;
+      font-size: 14pt;
+      font-weight: bold;
+      margin-bottom: 3pt;
+    }
+    
+    .doc-info p {
+      color: #666;
+      font-size: 10pt;
+    }
+    
+    .section {
+      margin-bottom: 20pt;
+      break-inside: avoid;
+    }
+    
+    .section h3 {
+      color: #000;
+      font-size: 12pt;
+      font-weight: bold;
+      margin-bottom: 8pt;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 4pt;
+    }
+    
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10pt;
+      width: 100%;
+    }
+    
+    .info-item {
+      display: block;
+      padding: 8pt;
+      background: #f8f8f8;
+      border-left: 3pt solid #000;
+      break-inside: avoid;
+    }
+    
+    .info-item label {
+      font-weight: bold;
+      color: #000;
+      font-size: 10pt;
+      display: block;
+      margin-bottom: 2pt;
+    }
+    
+    .info-item span {
+      color: #000;
+      font-size: 11pt;
+      display: block;
+    }
+    
+    .status-active {
+      color: #000 !important;
+      font-weight: bold;
+    }
+    
+    .status-inactive {
+      color: #000 !important;
+      font-weight: bold;
+    }
+    
+    .footer {
+      margin-top: 20pt;
+      padding-top: 10pt;
+      border-top: 1px solid #ccc;
+      text-align: center;
+      color: #666;
+      font-size: 8pt;
+    }
+    
+    .footer p {
+      margin-bottom: 2pt;
+    }
+    
+    @page {
+      margin: 15mm;
+      size: A4 portrait;
+    }
+    
+    @media print {
+      * {
+        -webkit-print-color-adjust: exact !important;
+        color-adjust: exact !important;
+      }
+      
+      body {
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      
+      .print-container {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        max-width: none !important;
+      }
+      
+      .no-print {
+        display: none !important;
+      }
+    }
+  `;
 };
 
 // Estilos CSS para los documentos
