@@ -14,7 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Upload, AlertCircle, Loader2, CreditCard } from "lucide-react";
+import { Upload, AlertCircle, Loader2, CreditCard, ExternalLink, MapPin } from "lucide-react";
 
 const tmeSchema = z.object({
   // Datos obligatorios del animal (no modificables una vez creado)
@@ -108,6 +108,104 @@ export default function TMEForm({ onClose }: TMEFormProps) {
     "Cambio de propietario",
     "Actualización de datos",
     "Sustitución por TME anterior",
+  ];
+
+  const comunidadesAutonomas = [
+    {
+      nombre: "Andalucía",
+      url: "https://www.juntadeandalucia.es/organismos/agriculturapescaydesarrollorural/areas/ganaderia/sanidad-animal/paginas/ordenacion-zootecnica-sanitaria-sector-equino.html",
+      descripcion: "Ordenación Zootécnica y Sanitaria del sector equino - Junta de Andalucía"
+    },
+    {
+      nombre: "Aragón",
+      url: "https://www.aragon.es/tramitador/-/tramite/registro-informatico-equidos-aragon-riequi",
+      descripcion: "Registro Informático de Équidos de Aragón (RIEQUI)"
+    },
+    {
+      nombre: "Asturias",
+      url: "https://sede.asturias.es/portal/site/Asturias/menuitem.078b7d5ce7f93d26fbac5b52e20142ca/",
+      descripcion: "Registro de identificación individual de animales y movimientos - Principado de Asturias"
+    },
+    {
+      nombre: "Islas Baleares",
+      url: "https://sede.colveterinariosbaleares.com/",
+      descripcion: "Sede Electrónica del Col·legi Oficial de Veterinaris de les Illes Balears"
+    },
+    {
+      nombre: "Canarias",
+      url: "https://sede.gobiernodecanarias.org/sede/tramite/3003",
+      descripcion: "Expedición de guías sanitarias para el movimiento de animales - Gobierno de Canarias"
+    },
+    {
+      nombre: "Cantabria",
+      url: "https://www.colevetcantabria.com/tme",
+      descripcion: "Tarjeta de Movimiento Equina - Colegio Veterinario de Cantabria"
+    },
+    {
+      nombre: "Castilla y León",
+      url: "https://tramitaenlinea.jcyl.es/web/jcyl/AdministracionElectronica/es/Plantilla100/1246989648173/_/_/_",
+      descripcion: "Solicitud de Tarjeta de Movimiento Equina - SIREQUI"
+    },
+    {
+      nombre: "Castilla-La Mancha",
+      url: "https://sede.jccm.es/",
+      descripcion: "Sede Electrónica de la Junta de Comunidades de Castilla-La Mancha"
+    },
+    {
+      nombre: "Cataluña",
+      url: "https://seu.cat/ca/tramits/identificacio-animals",
+      descripcion: "Sede Electrónica de la Generalitat de Catalunya"
+    },
+    {
+      nombre: "Comunidad Valenciana",
+      url: "https://sede.gva.es/es/tramites",
+      descripcion: "Sede Electrónica de la Generalitat Valenciana"
+    },
+    {
+      nombre: "Extremadura",
+      url: "https://sede.gobex.es/",
+      descripcion: "Sede Electrónica de la Junta de Extremadura"
+    },
+    {
+      nombre: "Galicia",
+      url: "https://sede.xunta.gal/",
+      descripcion: "Sede Electrónica de la Xunta de Galicia"
+    },
+    {
+      nombre: "Madrid",
+      url: "https://gestiona.comunidad.madrid/wps/portal/tramites/home",
+      descripcion: "Registro de Identificación de Équidos de la Comunidad de Madrid (RIEQUIMAD)"
+    },
+    {
+      nombre: "Murcia",
+      url: "https://sede.carm.es/web/pagina?IDCONTENIDO=1174&IDTIPO=100&RASTRO=c$m40288",
+      descripcion: "Tarjeta de Movimiento Equina (TME) - Región de Murcia"
+    },
+    {
+      nombre: "Navarra",
+      url: "https://sedeelectronica.navarra.es/eSede/es/tramites",
+      descripcion: "Tarjeta de Movimiento Equino - Gobierno de Navarra"
+    },
+    {
+      nombre: "País Vasco",
+      url: "https://www.euskadi.eus/tramites/",
+      descripción: "Sede Electrónica del Gobierno Vasco"
+    },
+    {
+      nombre: "La Rioja",
+      url: "https://www.larioja.org/sede-electronica/es",
+      descripcion: "Sede Electrónica del Gobierno de La Rioja"
+    },
+    {
+      nombre: "Ceuta",
+      url: "https://sede.ceuta.es/",
+      descripcion: "Sede Electrónica de la Ciudad Autónoma de Ceuta"
+    },
+    {
+      nombre: "Melilla",
+      url: "https://sede.melilla.es/",
+      descripcion: "Sede Electrónica de la Ciudad Autónoma de Melilla"
+    }
   ];
 
   return (
@@ -337,6 +435,57 @@ export default function TMEForm({ onClose }: TMEFormProps) {
                     <p className="text-sm text-gray-600">DNI del propietario</p>
                     <p className="text-xs text-gray-500">Para verificación</p>
                   </div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Tramitación Electrónica por Comunidad Autónoma */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <MapPin className="w-5 h-5" />
+              4. Tramitación Electrónica por Comunidad Autónoma
+            </CardTitle>
+            <CardDescription>
+              Enlaces específicos para que el veterinario colaborador realice la tramitación electrónica
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-96 overflow-y-auto">
+              {comunidadesAutonomas.map((comunidad, index) => (
+                <div key={index} className="border rounded-lg p-3 hover:bg-gray-50 transition-colors">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <h4 className="font-medium text-gray-900">{comunidad.nombre}</h4>
+                      <p className="text-sm text-gray-600 mt-1 line-clamp-2">
+                        {comunidad.descripcion}
+                      </p>
+                    </div>
+                    <a
+                      href={comunidad.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="ml-2 p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-colors"
+                      title={`Acceder a ${comunidad.nombre}`}
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+              <div className="flex items-start gap-2">
+                <AlertCircle className="w-5 h-5 text-amber-600 mt-0.5" />
+                <div className="text-sm">
+                  <p className="font-medium text-amber-800">Importante para el veterinario</p>
+                  <p className="text-amber-700 mt-1">
+                    Estos enlaces son para que el veterinario colaborador autorizado acceda al sistema 
+                    de tramitación electrónica correspondiente a su comunidad autónoma y procese la solicitud de TME.
+                  </p>
                 </div>
               </div>
             </div>
