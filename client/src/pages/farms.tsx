@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useAuth } from "@/hooks/use-auth";
+import { useAuth } from "../lib/simple-auth";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Plus, Search, Building, MapPin, Phone, Mail, Users, Eye, Edit } from "lucide-react";
-import FarmForm from "@/components/forms/farm-form";
 
 export default function Farms() {
   const { user } = useAuth();
@@ -228,18 +227,4 @@ export default function Farms() {
   );
 }
 
-// Placeholder Farm Form Component
-function FarmForm({ farm, onClose }: { farm?: any; onClose: () => void }) {
-  return (
-    <div className="p-6 text-center">
-      <Building className="w-16 h-16 mx-auto text-gray-400 mb-4" />
-      <h3 className="text-lg font-semibold mb-2">
-        {farm ? "Editar Explotación" : "Nueva Explotación"}
-      </h3>
-      <p className="text-gray-600 mb-6">
-        Este formulario estará disponible próximamente.
-      </p>
-      <Button onClick={onClose}>Cerrar</Button>
-    </div>
-  );
-}
+
