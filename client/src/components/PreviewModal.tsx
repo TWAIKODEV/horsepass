@@ -176,14 +176,6 @@ export default function PreviewModal({ isOpen, onClose, data }: PreviewModalProp
                 <Printer className="w-4 h-4" />
                 Imprimir
               </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={onClose}
-                className="flex items-center gap-2"
-              >
-                <X className="w-4 h-4" />
-              </Button>
             </div>
           </div>
         </DialogHeader>
