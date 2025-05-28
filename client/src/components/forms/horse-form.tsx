@@ -135,13 +135,10 @@ export default function HorseForm({ horse, onClose }: HorseFormProps) {
   return (
     <div>
       <div className="p-6 border-b border-gray-200">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-center">
           <h3 className="text-lg font-semibold text-gray-900">
             {isEdit ? "Editar Caballo" : "Nuevo Caballo"}
           </h3>
-          <Button variant="ghost" size="icon" onClick={onClose}>
-            <X className="w-5 h-5" />
-          </Button>
         </div>
       </div>
 

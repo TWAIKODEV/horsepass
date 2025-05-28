@@ -2,6 +2,52 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Estilos personalizados para botón de cierre de modales */
+[data-radix-dialog-content] {
+  position: relative;
+}
+
+/* Botón X mejorado para modales */
+[data-radix-dialog-close] {
+  position: absolute !important;
+  top: 12px !important;
+  right: 12px !important;
+  z-index: 50 !important;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 50% !important;
+  background: white !important;
+  border: 2px solid #e5e7eb !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.2s ease !important;
+}
+
+[data-radix-dialog-close]:hover {
+  background: #f3f4f6 !important;
+  border-color: #d1d5db !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2) !important;
+  transform: scale(1.05) !important;
+}
+
+[data-radix-dialog-close]:focus {
+  outline: none !important;
+  ring: 2px solid #3b82f6 !important;
+  ring-offset: 2px !important;
+}
+
+[data-radix-dialog-close] svg {
+  width: 20px !important;
+  height: 20px !important;
+  color: #6b7280 !important;
+}
+
+[data-radix-dialog-close]:hover svg {
+  color: #374151 !important;
+}
+
 :root {
   --background: 0 0% 100%;
   --foreground: 20 14.3% 4.1%;
