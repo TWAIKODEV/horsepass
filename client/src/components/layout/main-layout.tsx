@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import horsePassLogo from "@assets/logo_horsepass_azul_gris_1.png";
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -10,8 +11,13 @@ export default function MainLayout({ children }: MainLayoutProps) {
       <header className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <h1 className="text-xl font-semibold text-gray-900">AGDE - Sistema de Gestión Equina</h1>
+            <div className="flex items-center space-x-3">
+              <img 
+                src={horsePassLogo} 
+                alt="HorsePass Logo" 
+                className="h-8 w-auto"
+              />
+              <h1 className="text-xl font-semibold text-gray-900">Sistema de Gestión Equina</h1>
             </div>
             <nav className="flex space-x-8">
               <a href="/dashboard" className="text-gray-700 hover:text-gray-900">Dashboard</a>
