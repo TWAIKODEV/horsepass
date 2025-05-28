@@ -14,6 +14,10 @@ import type {
   FunctionReference,
 } from "convex/server";
 import type * as caballos from "../caballos.js";
+import type * as certificados from "../certificados.js";
+import type * as dashboard from "../dashboard.js";
+import type * as explotaciones from "../explotaciones.js";
+import type * as pasaportes from "../pasaportes.js";
 import type * as users from "../users.js";
 
 /**
@@ -26,6 +30,10 @@ import type * as users from "../users.js";
  */
 declare const fullApi: ApiFromModules<{
   caballos: typeof caballos;
+  certificados: typeof certificados;
+  dashboard: typeof dashboard;
+  explotaciones: typeof explotaciones;
+  pasaportes: typeof pasaportes;
   users: typeof users;
 }>;
 export declare const api: FilterApi<
