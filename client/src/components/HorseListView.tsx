@@ -1,4 +1,4 @@
-import { Eye, Edit, Download, Printer, Search, Plus, FileText } from 'lucide-react';
+import { Eye, Edit, Download, Printer, Search, Plus } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -41,7 +41,6 @@ interface HorseListViewProps {
   onEdit: (horse: Horse) => void;
   onDownload: (horse: Horse) => void;
   onPrint: (horse: Horse) => void;
-  onGenerateTME: (horse: Horse) => void;
   onAdd: () => void;
 }
 
@@ -51,7 +50,6 @@ export default function HorseListView({
   onEdit, 
   onDownload, 
   onPrint,
-  onGenerateTME,
   onAdd 
 }: HorseListViewProps) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -162,15 +160,6 @@ export default function HorseListView({
                           className="h-8 w-8 p-0 hover:bg-yellow-100 hover:text-yellow-600"
                         >
                           <Edit className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => onGenerateTME(horse)}
-                          title="Generar TME (RD 577/2014)"
-                          className="h-8 w-8 p-0 hover:bg-purple-100 hover:text-purple-600"
-                        >
-                          <FileText className="h-4 w-4" />
                         </Button>
                         <Button
                           variant="ghost"
