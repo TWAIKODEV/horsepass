@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { useLocation } from "wouter";
-import type { User } from "@shared/schema";
+import type { User } from "../../../shared/schema";
 
 interface AuthContextType {
   user: User | null;
@@ -11,7 +11,7 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export function AuthProvider({ children }: { children: ReactNode }) {
+function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [, setLocation] = useLocation();
@@ -73,3 +73,6 @@ export function useAuth() {
   }
   return context;
 }
+
+export default AuthProvider;
+export { useAuth };
