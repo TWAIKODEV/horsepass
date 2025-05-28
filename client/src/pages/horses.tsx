@@ -12,7 +12,7 @@ import { es } from "date-fns/locale";
 import HorseForm from "@/components/forms/horse-form";
 import HorseListView from "@/components/HorseListView";
 import PreviewModal from "@/components/PreviewModal";
-import TMEForm from "@/components/forms/tme-form";
+// import TMEForm from "@/components/forms/tme-form";
 import { useToast } from "@/hooks/use-toast";
 import { downloadPDF, printDocument, DocumentData } from "@/lib/document-utils";
 
@@ -115,11 +115,9 @@ export default function Horses() {
   };
 
   const handleGenerateTME = (horse: any) => {
-    setSelectedHorseForTME(horse);
-    setShowTMEForm(true);
     toast({
-      title: "Generando TME",
-      description: `Iniciando creación de TME para ${horse.nombre} según RD 577/2014`,
+      title: "TME - Próximamente",
+      description: `La función TME para ${horse.nombre} estará disponible próximamente según RD 577/2014`,
     });
   };
 
@@ -344,18 +342,7 @@ export default function Horses() {
         data={previewData}
       />
 
-      {/* TME Form Modal */}
-      <Dialog open={showTMEForm} onOpenChange={setShowTMEForm}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-          <TMEForm 
-            caballo={selectedHorseForTME}
-            onClose={() => {
-              setShowTMEForm(false);
-              setSelectedHorseForTME(null);
-            }} 
-          />
-        </DialogContent>
-      </Dialog>
+      {/* TME Form Modal - Próximamente */}
     </div>
   );
 }
