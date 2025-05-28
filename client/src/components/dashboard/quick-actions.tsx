@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { IdCard, Truck, Stethoscope, Camera } from "lucide-react";
-import PassportForm from "@/components/forms/passport-form";
+import TMEForm from "@/components/forms/tme-form";
 import MovementGuideForm from "@/components/forms/movement-guide-form";
 import HealthCertificateForm from "@/components/forms/health-certificate-form";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -11,9 +11,9 @@ export default function QuickActions() {
 
   const actions = [
     {
-      id: "passport",
-      title: "Nuevo TIE",
-      description: "Pasaporte Equino",
+      id: "tme",
+      title: "Nuevo TME",
+      description: "Tarjeta Movimientos Équidos",
       icon: IdCard,
       color: "blue",
       bgColor: "bg-blue-50 hover:bg-blue-100"
@@ -56,8 +56,8 @@ export default function QuickActions() {
 
   const renderModalContent = () => {
     switch (activeModal) {
-      case "passport":
-        return <PassportForm onClose={() => setActiveModal(null)} />;
+      case "tme":
+        return <TMEForm onClose={() => setActiveModal(null)} />;
       case "movement":
         return <MovementGuideForm onClose={() => setActiveModal(null)} />;
       case "health":
