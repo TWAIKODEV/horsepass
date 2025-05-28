@@ -6,16 +6,20 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Plus, Search, Rabbit, Calendar, MapPin, Eye, Edit } from "lucide-react";
+import { Plus, Search, Rabbit, Calendar, MapPin, Eye, Edit, Grid, List } from "lucide-react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import HorseForm from "@/components/forms/horse-form";
+import HorseListView from "@/components/HorseListView";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Horses() {
   const { user } = useAuth();
   const [searchTerm, setSearchTerm] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [selectedHorse, setSelectedHorse] = useState<any>(null);
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const { toast } = useToast();
 
   const { data: caballos = [], isLoading, error } = useQuery({
     queryKey: ["/api/caballos", user?.id],
@@ -46,6 +50,32 @@ export default function Horses() {
     }
   };
 
+  const handlePreview = (horse: any) => {
+    toast({
+      title: "Vista previa",
+      description: `Mostrando detalles de ${horse.nombre}`,
+    });
+  };
+
+  const handleEdit = (horse: any) => {
+    setSelectedHorse(horse);
+    setShowForm(true);
+  };
+
+  const handleDownload = (horse: any) => {
+    toast({
+      title: "Descarga iniciada",
+      description: `Descargando documentos de ${horse.nombre}`,
+    });
+  };
+
+  const handlePrint = (horse: any) => {
+    toast({
+      title: "Impresión iniciada",
+      description: `Preparando documentos de ${horse.nombre} para imprimir`,
+    });
+  };
+
   if (error) {
     return (
       <div className="text-center py-12">
@@ -64,10 +94,30 @@ export default function Horses() {
           <h1 className="text-2xl font-bold text-gray-900">Gestión de Caballos</h1>
           <p className="text-gray-600">Administra el registro de tus equinos</p>
         </div>
-        <Button onClick={() => setShowForm(true)} className="flex items-center gap-2">
-          <Plus className="w-4 h-4" />
-          Nuevo Caballo
-        </Button>
+        <div className="flex items-center gap-2">
+          <div className="flex bg-gray-100 rounded-lg p-1">
+            <Button
+              variant={viewMode === 'grid' ? 'default' : 'ghost'}
+              size="sm"
+              onClick={() => setViewMode('grid')}
+              className="h-8"
+            >
+              <Grid className="w-4 h-4" />
+            </Button>
+            <Button
+              variant={viewMode === 'list' ? 'default' : 'ghost'}
+              size="sm"
+              onClick={() => setViewMode('list')}
+              className="h-8"
+            >
+              <List className="w-4 h-4" />
+            </Button>
+          </div>
+          <Button onClick={() => setShowForm(true)} className="flex items-center gap-2">
+            <Plus className="w-4 h-4" />
+            Nuevo Caballo
+          </Button>
+        </div>
       </div>
 
       {/* Search and Filters */}
@@ -95,7 +145,7 @@ export default function Horses() {
         </CardContent>
       </Card>
 
-      {/* Horses Grid */}
+      {/* Horses Display */}
       {isLoading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[...Array(6)].map((_, i) => (
@@ -131,6 +181,15 @@ export default function Horses() {
             )}
           </CardContent>
         </Card>
+      ) : viewMode === 'list' ? (
+        <HorseListView
+          horses={filteredHorses}
+          onPreview={handlePreview}
+          onEdit={handleEdit}
+          onDownload={handleDownload}
+          onPrint={handlePrint}
+          onAdd={() => setShowForm(true)}
+        />
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredHorses.map((caballo: any) => (
@@ -179,7 +238,12 @@ export default function Horses() {
                 </div>
 
                 <div className="pt-4 border-t flex justify-between">
-                  <Button variant="outline" size="sm" className="flex items-center gap-1">
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="flex items-center gap-1"
+                    onClick={() => handlePreview(caballo)}
+                  >
                     <Eye className="w-4 h-4" />
                     Ver
                   </Button>
@@ -187,10 +251,7 @@ export default function Horses() {
                     variant="outline" 
                     size="sm" 
                     className="flex items-center gap-1"
-                    onClick={() => {
-                      setSelectedHorse(caballo);
-                      setShowForm(true);
-                    }}
+                    onClick={() => handleEdit(caballo)}
                   >
                     <Edit className="w-4 h-4" />
                     Editar

@@ -1,0 +1,74 @@
+// src/pages/gestion-caballos/HorseListView.tsx
+import React from 'react';
+import { Eye, Edit, Download, Printer } from 'lucide-react';
+
+type Horse = {
+  id: string;
+  name: string;
+  breed: string;
+  age: number;
+};
+
+interface HorseListViewProps {
+  horses: Horse[];
+  onPreview: (horse: Horse) => void;
+  onEdit: (horse: Horse) => void;
+  onDownload: (horse: Horse) => void;
+  onPrint: (horse: Horse) => void;
+}
+
+export default function HorseListView({ horses, onPreview, onEdit, onDownload, onPrint }: HorseListViewProps) {
+  return (
+    <div className="overflow-x-auto">
+      <table className="min-w-full bg-white shadow rounded-lg overflow-hidden">
+        <thead className="bg-gray-100">
+          <tr>
+            <th className="px-4 py-2 text-left">Nombre</th>
+            <th className="px-4 py-2 text-left">Raza</th>
+            <th className="px-4 py-2 text-left">Edad</th>
+            <th className="px-4 py-2 text-center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {horses.map(horse => (
+            <tr key={horse.id} className="border-t">
+              <td className="px-4 py-2">{horse.name}</td>
+              <td className="px-4 py-2">{horse.breed}</td>
+              <td className="px-4 py-2">{horse.age}</td>
+              <td className="px-4 py-2 flex justify-center space-x-4">
+                <button
+                  onClick={() => onPreview(horse)}
+                  title="Previsualizar"
+                  className="text-primary hover:text-primary-dark"
+                >
+                  <Eye size={18} />
+                </button>
+                <button
+                  onClick={() => onEdit(horse)}
+                  title="Editar"
+                  className="text-secondary hover:text-secondary-dark"
+                >
+                  <Edit size={18} />
+                </button>
+                <button
+                  onClick={() => onDownload(horse)}
+                  title="Descargar"
+                  className="text-green-500 hover:text-green-700"
+                >
+                  <Download size={18} />
+                </button>
+                <button
+                  onClick={() => onPrint(horse)}
+                  title="Imprimir"
+                  className="text-gray-700 hover:text-gray-900"
+                >
+                  <Printer size={18} />
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
