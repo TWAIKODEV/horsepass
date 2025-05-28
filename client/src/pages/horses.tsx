@@ -24,8 +24,7 @@ export default function Horses() {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [showPreview, setShowPreview] = useState(false);
   const [previewData, setPreviewData] = useState<DocumentData | null>(null);
-  const [showTMEForm, setShowTMEForm] = useState(false);
-  const [selectedHorseForTME, setSelectedHorseForTME] = useState<any>(null);
+
   const { toast } = useToast();
 
   const { data: caballos = [], isLoading, error } = useQuery({
