@@ -343,6 +343,19 @@ export default function Horses() {
         }}
         data={previewData}
       />
+
+      {/* TME Form Modal */}
+      <Dialog open={showTMEForm} onOpenChange={setShowTMEForm}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <TMEForm 
+            caballo={selectedHorseForTME}
+            onClose={() => {
+              setShowTMEForm(false);
+              setSelectedHorseForTME(null);
+            }} 
+          />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
