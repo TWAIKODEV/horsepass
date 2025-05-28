@@ -11,7 +11,9 @@ import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import HorseForm from "@/components/forms/horse-form";
 import HorseListView from "@/components/HorseListView";
+import PreviewModal from "@/components/PreviewModal";
 import { useToast } from "@/hooks/use-toast";
+import { downloadPDF, printDocument, DocumentData } from "@/lib/document-utils";
 
 export default function Horses() {
   const { user } = useAuth();
@@ -19,6 +21,8 @@ export default function Horses() {
   const [showForm, setShowForm] = useState(false);
   const [selectedHorse, setSelectedHorse] = useState<any>(null);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [showPreview, setShowPreview] = useState(false);
+  const [previewData, setPreviewData] = useState<DocumentData | null>(null);
   const { toast } = useToast();
 
   const { data: caballos = [], isLoading, error } = useQuery({
@@ -51,10 +55,13 @@ export default function Horses() {
   };
 
   const handlePreview = (horse: any) => {
-    toast({
-      title: "Vista previa",
-      description: `Mostrando detalles de ${horse.nombre}`,
-    });
+    const documentData: DocumentData = {
+      title: `Ficha del Caballo - ${horse.nombre}`,
+      content: horse,
+      type: 'caballo'
+    };
+    setPreviewData(documentData);
+    setShowPreview(true);
   };
 
   const handleEdit = (horse: any) => {
@@ -62,18 +69,46 @@ export default function Horses() {
     setShowForm(true);
   };
 
-  const handleDownload = (horse: any) => {
-    toast({
-      title: "Descarga iniciada",
-      description: `Descargando documentos de ${horse.nombre}`,
-    });
+  const handleDownload = async (horse: any) => {
+    try {
+      const documentData: DocumentData = {
+        title: `Ficha del Caballo - ${horse.nombre}`,
+        content: horse,
+        type: 'caballo'
+      };
+      await downloadPDF(documentData);
+      toast({
+        title: "Descarga completada",
+        description: `El documento PDF de ${horse.nombre} se ha descargado exitosamente.`,
+      });
+    } catch (error) {
+      toast({
+        title: "Error en la descarga",
+        description: "No se pudo generar el PDF. Inténtalo de nuevo.",
+        variant: "destructive",
+      });
+    }
   };
 
   const handlePrint = (horse: any) => {
-    toast({
-      title: "Impresión iniciada",
-      description: `Preparando documentos de ${horse.nombre} para imprimir`,
-    });
+    try {
+      const documentData: DocumentData = {
+        title: `Ficha del Caballo - ${horse.nombre}`,
+        content: horse,
+        type: 'caballo'
+      };
+      printDocument(documentData);
+      toast({
+        title: "Impresión iniciada",
+        description: `Se ha abierto la ventana de impresión para ${horse.nombre}.`,
+      });
+    } catch (error) {
+      toast({
+        title: "Error en la impresión",
+        description: "No se pudo iniciar la impresión. Inténtalo de nuevo.",
+        variant: "destructive",
+      });
+    }
   };
 
   if (error) {
@@ -263,7 +298,7 @@ export default function Horses() {
         </div>
       )}
 
-      {/* Rabbit Form Dialog */}
+      {/* Horse Form Dialog */}
       <Dialog open={showForm} onOpenChange={setShowForm}>
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <HorseForm 
@@ -275,6 +310,16 @@ export default function Horses() {
           />
         </DialogContent>
       </Dialog>
+
+      {/* Preview Modal */}
+      <PreviewModal
+        isOpen={showPreview}
+        onClose={() => {
+          setShowPreview(false);
+          setPreviewData(null);
+        }}
+        data={previewData}
+      />
     </div>
   );
 }
